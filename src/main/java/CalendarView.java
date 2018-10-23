@@ -22,22 +22,18 @@
 	import java.util.List;
 
 	public class CalendarView {
-	    private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
+	    private static final String APPLICATION_NAME = "Google Calendar Events Viewer";
 	    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	    private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
 	    /**
-	     * Global instance of the scopes required by this quickstart.
 	     * If modifying these scopes, delete your previously saved tokens/ folder.
 	     */
 	    private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
 	    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
 	    /**
-	     * Creates an authorized Credential object.
-	     * @param HTTP_TRANSPORT The network HTTP Transport.
-	     * @return An authorized Credential object.
-	     * @throws IOException If the credentials.json file cannot be found.
+	     * Creates an authorized Credential object
 	     */
 	    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
 	        // Load client secrets.
@@ -61,10 +57,10 @@
 	                .setApplicationName(APPLICATION_NAME)
 	                .build();
 
-	        // List the next 10 events from the primary calendar.
+	        // List the next 20 events from the primary calendar.
 	        DateTime now = new DateTime(System.currentTimeMillis());
 	        Events events = service.events().list("primary")
-	                .setMaxResults(10)
+	                .setMaxResults(20)
 	                .setTimeMin(now)
 	                .setOrderBy("startTime")
 	                .setSingleEvents(true)
@@ -73,7 +69,7 @@
 	        if (items.isEmpty()) {
 	            System.out.println("No upcoming events found.");
 	        } else {
-	            System.out.println("Upcoming events");
+	            System.out.println("Upcoming events\n");
 	            for (Event event : items) {
 	                DateTime start = event.getStart().getDateTime();
 	                if (start == null) {
